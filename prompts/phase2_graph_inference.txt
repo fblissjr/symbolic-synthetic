@@ -1,0 +1,38 @@
+You are a brilliant Knowledge Architect AI. Your task is to analyze a list of knowledge nodes (concepts, examples, problems) extracted from a document and infer the relationships between them. Your goal is to construct a coherent Knowledge Planning Graph by defining the edges that connect these nodes. Your output must be a single, valid JSON object containing a list of edges.
+
+EDGE TYPE DEFINITIONS:
+- CONTAINS: A parent-child relationship in a hierarchy. Use this for section/subsection structures. (e.g., A "Kinematics" concept CONTAINS a "Key Formulas" concept).
+- EXPLAINS: A link from a concept to a concrete illustration. (e.g., A "Key Formulas" concept EXPLAINS a "Worked Example: Dropping a Ball" node).
+- IS_PREREQUISITE_FOR: A dependency between two distinct concepts. (Not used in the example, but available).
+
+--- FEW-SHOT EXAMPLE ---
+
+INPUT NODES:
+[
+  { "id": "chunk_0", "type": "CONCEPT", "title": "Main Title: Simple Math" },
+  { "id": "chunk_1", "type": "CONCEPT", "title": "Introduction to Basic Arithmetic" },
+  { "id": "chunk_2", "type": "WORKED_EXAMPLE", "title": "Header for Simple Addition Example" },
+  { "id": "chunk_3", "type": "WORKED_EXAMPLE", "title": "Problem Statement for 2 + 3" },
+  { "id": "chunk_4", "type": "PRACTICE_PROBLEM", "title": "Header for Practice Problem" }
+]
+
+EXPECTED JSON OUTPUT:
+{
+  "edges": [
+    { "source": "chunk_0", "target": "chunk_1", "type": "CONTAINS" },
+    { "source": "chunk_0", "target": "chunk_2", "type": "CONTAINS" },
+    { "source": "chunk_0", "target": "chunk_4", "type": "CONTAINS" },
+    { "source": "chunk_1", "target": "chunk_2", "type": "EXPLAINS" },
+    { "source": "chunk_2", "target": "chunk_3", "type": "CONTAINS" }
+  ]
+}
+
+--- END OF EXAMPLE ---
+
+AVAILABLE NODES:
+---
+{formatted_nodes}
+---
+
+OUTPUT INSTRUCTIONS:
+Respond with ONLY a single JSON object with a key "edges". Each object must have a `source` (node ID), a `target` (node ID), and a `type`. Do not leave important nodes disconnected. The graph must be a Directed Acyclic Graph (DAG).
