@@ -32,46 +32,46 @@ CHUNK 5:
 ---
 
 EXPECTED JSON OUTPUT:
-{
+{{
   "nodes": [
-    {
+    {{
       "id": "chunk_0",
       "node_type": "CONCEPT",
       "title": "Main Title: Simple Math",
       "content": "# Simple Math"
-    },
-    {
+    }},
+    {{
       "id": "chunk_1",
       "node_type": "CONCEPT",
       "title": "Introduction to Basic Arithmetic",
       "content": "This section covers basic arithmetic operations like addition and multiplication."
-    },
-    {
+    }},
+    {{
       "id": "chunk_2",
       "node_type": "WORKED_EXAMPLE",
       "title": "Header for Simple Addition Example",
       "content": "## Worked Example: Simple Addition"
-    },
-    {
+    }},
+    {{
       "id": "chunk_3",
       "node_type": "WORKED_EXAMPLE",
       "title": "Problem Statement for 2 + 3",
       "content": "**Problem:** What is 2 + 3?"
-    },
-    {
+    }},
+    {{
       "id": "chunk_4",
       "node_type": "WORKED_EXAMPLE",
       "title": "Step-by-step Solution for 2 + 3",
       "content": "**Solution:**\nWe add the two numbers together.\n2 + 3 = 5.\nThe result is 5."
-    },
-    {
+    }},
+    {{
       "id": "chunk_5",
       "node_type": "UNKNOWN",
       "title": "Horizontal Separator Line",
       "content": "***"
-    }
+    }}
   ]
-}
+}}
 
 --- END OF EXAMPLE ---
 

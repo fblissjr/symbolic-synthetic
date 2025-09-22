@@ -9,23 +9,23 @@ EDGE TYPE DEFINITIONS:
 
 INPUT NODES:
 [
-  { "id": "chunk_0", "type": "CONCEPT", "title": "Main Title: Simple Math" },
-  { "id": "chunk_1", "type": "CONCEPT", "title": "Introduction to Basic Arithmetic" },
-  { "id": "chunk_2", "type": "WORKED_EXAMPLE", "title": "Header for Simple Addition Example" },
-  { "id": "chunk_3", "type": "WORKED_EXAMPLE", "title": "Problem Statement for 2 + 3" },
-  { "id": "chunk_4", "type": "PRACTICE_PROBLEM", "title": "Header for Practice Problem" }
+  {{ "id": "chunk_0", "type": "CONCEPT", "title": "Main Title: Simple Math" }},
+  {{ "id": "chunk_1", "type": "CONCEPT", "title": "Introduction to Basic Arithmetic" }},
+  {{ "id": "chunk_2", "type": "WORKED_EXAMPLE", "title": "Header for Simple Addition Example" }},
+  {{ "id": "chunk_3", "type": "WORKED_EXAMPLE", "title": "Problem Statement for 2 + 3" }},
+  {{ "id": "chunk_4", "type": "PRACTICE_PROBLEM", "title": "Header for Practice Problem" }}
 ]
 
 EXPECTED JSON OUTPUT:
-{
+{{
   "edges": [
-    { "source": "chunk_0", "target": "chunk_1", "type": "CONTAINS" },
-    { "source": "chunk_0", "target": "chunk_2", "type": "CONTAINS" },
-    { "source": "chunk_0", "target": "chunk_4", "type": "CONTAINS" },
-    { "source": "chunk_1", "target": "chunk_2", "type": "EXPLAINS" },
-    { "source": "chunk_2", "target": "chunk_3", "type": "CONTAINS" }
+    {{ "source": "chunk_0", "target": "chunk_1", "type": "CONTAINS" }},
+    {{ "source": "chunk_0", "target": "chunk_2", "type": "CONTAINS" }},
+    {{ "source": "chunk_0", "target": "chunk_4", "type": "CONTAINS" }},
+    {{ "source": "chunk_1", "target": "chunk_2", "type": "EXPLAINS" }},
+    {{ "source": "chunk_2", "target": "chunk_3", "type": "CONTAINS" }}
   ]
-}
+}}
 
 --- END OF EXAMPLE ---
 

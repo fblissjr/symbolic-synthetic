@@ -11,19 +11,27 @@ from dotenv import load_dotenv
 from llm_services import classify_and_extract_raw_nodes, infer_graph_relationships
 from graph_builder import KnowledgePlanningGraph
 
-DEFAULT_API_BASE_URL = "http://localhost:1234/v1"
-DEFAULT_MODEL = "local-model"
+# No longer using a default model name here
+DEFAULT_API_BASE_URL = "http://localhost:8080/v1"
 
 def chunk_document(markdown_text: str) -> list[str]:
     """Splits the document by double newlines."""
-    # A simple but effective chunking strategy for Markdown
     return [chunk for chunk in re.split(r'\n\n+', markdown_text) if chunk.strip()]
 
 def main():
     parser = argparse.ArgumentParser(description="Build a Knowledge Planning Graph from a Markdown file.")
     parser.add_argument("input_file", help="Path to the input Markdown file.")
     parser.add_argument("--base-url", default=os.getenv("OPENAI_API_BASE", DEFAULT_API_BASE_URL))
-    parser.add_argument("--model", default=os.getenv("MODEL", DEFAULT_MODEL))
+
+    # --- CHANGE IS HERE ---
+    # Made the --model argument required and updated the help text.
+    parser.add_argument(
+        "--model",
+        required=True,
+        help="Name of the model available on the local server (e.g., 'magistral')."
+    )
+    # --- END OF CHANGE ---
+
     args = parser.parse_args()
 
     load_dotenv()
@@ -41,14 +49,13 @@ def main():
     chunks = chunk_document(text)
 
     # 2. Phase 1: Semantic Segmentation -> Raw Nodes
+    # The `args.model` value is now passed correctly from the command line
     raw_nodes = classify_and_extract_raw_nodes(chunks, client, args.model)
 
     # 3. Phase 2: Knowledge Graph Construction
     kpg = KnowledgePlanningGraph()
-    # 3a. Add nodes to the graph
     kpg.add_nodes(raw_nodes)
 
-    # 3b. Infer relationships (edges) and add them to the graph
     try:
         edges = infer_graph_relationships(raw_nodes, client, args.model)
         kpg.add_edges(edges)
@@ -58,14 +65,12 @@ def main():
     # 4. Phase 3: Asset Generation from KPG
     print("--- Generating Assets from KPG ---")
 
-    # 4a. Generate and save the SFT dataset
     sft_dataset = kpg.generate_sft_dataset()
     sft_output_path = os.path.join(output_dir, f"{base_filename}_sft.json")
     with open(sft_output_path, 'w', encoding='utf-8') as f:
         json.dump(sft_dataset, f, indent=2)
     print(f"SFT dataset saved to {sft_output_path}")
 
-    # 4b. Export the graph itself for analysis and visualization
     graphml_output_path = os.path.join(output_dir, f"{base_filename}_kpg.graphml")
     kpg.export_graphml(graphml_output_path)
 
